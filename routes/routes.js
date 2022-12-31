@@ -11,6 +11,7 @@ const {
     getProductsByStatus,
     updateProduct,
     updateProductImg,
+    deleteProduct,
 } = require("../controller/product");
 
 // IMPORT ALL MIDDLEWARE
@@ -75,6 +76,9 @@ routes.put(
     productAvatarUpload,
     updateProductImg
 );
+
+// DELETE PRODUCT ROUTE
+routes.delete("/products/:productId", deleteProduct);
 
 // LOGIN ROUTE
 routes.post(

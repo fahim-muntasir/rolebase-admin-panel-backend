@@ -127,6 +127,7 @@ const updateProduct = async (req, res) => {
     }
 };
 
+// UPDATE PRODUCT IMAGE
 const updateProductImg = async (req, res) => {
     const productId = req.params.id;
     console.log(productId);
@@ -155,6 +156,21 @@ const updateProductImg = async (req, res) => {
     }
 };
 
+// DELETE PRODUCT
+const deleteProduct = async (req, res) => {
+    const productId = JSON.parse(req.params.productId);
+    try {
+        await Product.deleteMany({ productId });
+        res.status(200).json({ success: true });
+    } catch (error) {
+        res.status(500).json({
+            errors: {
+                msg: "Somthing is wrong Product is not deleted!",
+            },
+        });
+    }
+};
+
 module.exports = {
     addProduct,
     getProducts,
@@ -162,4 +178,5 @@ module.exports = {
     updateProduct,
     updateProductImg,
     getProduct,
+    deleteProduct,
 };
