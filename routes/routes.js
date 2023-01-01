@@ -1,7 +1,12 @@
 const routes = require("express").Router();
 
 // IMPORT ALL CONTROLLER
-const { addUser, getUsers, getUsersByRole } = require("../controller/user");
+const {
+    addUser,
+    getUsers,
+    getUsersByRole,
+    deleteUser,
+} = require("../controller/user");
 const { loginController, logoutController } = require("../controller/login");
 const checkLoginController = require("../controller/checkLogin");
 const {
@@ -35,7 +40,7 @@ const {
 } = require("../middleware/common/checkRole");
 
 // Hello route
-routes.get("/", (req, res) => {
+routes.get("/", (_, res) => {
     res.send("Hello world");
 });
 
@@ -51,6 +56,9 @@ routes.post(
     userValidationResult,
     addUser
 );
+
+//DELETE USER ROUTE
+routes.delete("/users/:userId", deleteUser);
 
 // CREATE PRODUCT ROUTE
 routes.post(

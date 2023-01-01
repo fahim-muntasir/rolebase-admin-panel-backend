@@ -72,4 +72,19 @@ const getUsersByRole = async (req, res) => {
     }
 };
 
-module.exports = { addUser, getUsers, getUsersByRole };
+// DELETE USER
+const deleteUser = async (req, res) => {
+    const userId = JSON.parse(req.params.userId);
+    try {
+        await User.deleteMany({ _id: userId });
+        res.status(200).json({ success: true });
+    } catch (error) {
+        res.status(500).json({
+            errors: {
+                msg: "Somthing is wrong User is not deleted!",
+            },
+        });
+    }
+};
+
+module.exports = { addUser, getUsers, getUsersByRole, deleteUser };
