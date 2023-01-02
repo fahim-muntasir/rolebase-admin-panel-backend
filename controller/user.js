@@ -3,7 +3,8 @@ const bcrypt = require("bcrypt");
 
 // CREATE USER
 const addUser = async (req, res) => {
-    const { firstName, lastName, email, userRole, password } = req.body;
+    const { firstName, lastName, email, userRole, permission, password } =
+        req.body;
     if (req.files?.length > 0) {
         try {
             const hashPassword = await bcrypt.hash(password, 10);
@@ -13,6 +14,7 @@ const addUser = async (req, res) => {
                 email,
                 role: userRole,
                 avatar: req.files[0].filename,
+                permission,
                 password: hashPassword,
             });
             await createUser.save();
@@ -31,6 +33,7 @@ const addUser = async (req, res) => {
                 lastName,
                 email,
                 role: userRole,
+                permission,
                 password: hashPassword,
             });
             await createUser.save();
