@@ -6,6 +6,8 @@ const {
     getUsers,
     getUsersByRole,
     deleteUser,
+    updateUserPersmission,
+    getUser,
 } = require("../controller/user");
 const { loginController, logoutController } = require("../controller/login");
 const checkLoginController = require("../controller/checkLogin");
@@ -47,6 +49,7 @@ routes.get("/", (_, res) => {
 // GET USER ROUTE
 routes.get("/users/all", getUsers);
 routes.get("/users/:role", getUsersByRole);
+routes.get("/users/s/:userId", getUser);
 
 // CREATE USER ROUTE
 routes.post(
@@ -59,6 +62,9 @@ routes.post(
 
 //DELETE USER ROUTE
 routes.delete("/users/:userId", deleteUser);
+
+// UPDATE USER PERMISSION ROUTE
+routes.put("/users/:userId", updateUserPersmission);
 
 // CREATE PRODUCT ROUTE
 routes.post(

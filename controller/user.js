@@ -47,6 +47,21 @@ const addUser = async (req, res) => {
     }
 };
 
+// GET SINGLE USER
+const getUser = async (req, res) => {
+    const userId = req.params.userId;
+    try {
+        const users = await User.find({ _id: userId }).select({
+            password: 0,
+            __v: 0,
+        });
+
+        res.status(200).json(users);
+    } catch {
+        res.status(500).json({ errors: { msg: "User not found!" } });
+    }
+};
+
 // GET ALL USERS
 const getUsers = async (req, res) => {
     try {
@@ -90,4 +105,27 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { addUser, getUsers, getUsersByRole, deleteUser };
+// UPDATE USER PERMISSION
+const updateUserPersmission = async (req, res) => {
+    const { permission } = req.body;
+    const userId = req.params.userId;
+    try {
+        await User.updateOne({ _id: userId }, { $set: { permission } });
+        res.status(200).json({ msg: "User update successfull." });
+    } catch (error) {
+        res.status(500).json({
+            errors: {
+                msg: "Somthing is wrong User is not updated!",
+            },
+        });
+    }
+};
+
+module.exports = {
+    addUser,
+    getUsers,
+    getUsersByRole,
+    deleteUser,
+    updateUserPersmission,
+    getUser,
+};
