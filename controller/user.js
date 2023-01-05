@@ -3,8 +3,24 @@ const bcrypt = require("bcrypt");
 
 // CREATE USER
 const addUser = async (req, res) => {
-    const { firstName, lastName, email, userRole, permission, password } =
-        req.body;
+    const { firstName, lastName, email, userRole, password } = req.body;
+
+    let permission = null;
+    if (userRole === "admin") {
+        permission = {
+            product: { create: true, read: true, update: true, delete: true },
+        };
+    } else {
+        permission = {
+            product: {
+                create: false,
+                read: false,
+                update: false,
+                delete: false,
+            },
+        };
+    }
+
     if (req.files?.length > 0) {
         try {
             const hashPassword = await bcrypt.hash(password, 10);
@@ -22,7 +38,7 @@ const addUser = async (req, res) => {
             res.status(200).json({ msg: "User create successfull." });
         } catch {
             res.status(500).json({
-                globalError: { msg: "Something is wrong on user create!" },
+                globalError: { msg: "Something is wrong on user create1!" },
             });
         }
     } else {
@@ -41,7 +57,7 @@ const addUser = async (req, res) => {
             res.status(200).json({ msg: "User create successfull." });
         } catch {
             res.status(500).json({
-                globalError: { msg: "Something is wrong on user create!" },
+                globalError: { msg: "Something is wrong on user create2!" },
             });
         }
     }
